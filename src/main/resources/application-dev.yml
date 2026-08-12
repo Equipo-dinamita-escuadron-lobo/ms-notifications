@@ -60,8 +60,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: modulocarteracontapp@gmail.com # <-- TU EMAIL DE GMAIL
-    password: vqjdnvmhvaxwzxip             # <-- LA CONTRASEÑA DE 16 LETRAS QUE GENERASTE
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
     properties:
       mail:
         smtp:
@@ -72,8 +72,9 @@ spring:
   # Variables que usaremos en el código para no tener textos 'hardcodeados'
 notification-settings:
   mail:
-    from: modulocarteracontapp@gmail.com # <-- DEBE SER EL MISMO EMAIL DE ARRIBA
+    from: ${MAIL_FROM:${MAIL_USERNAME:}}
     invoice-reminder-subject: "Recordatorio de Vencimiento de Facturas"
+    payment-confirmation-subject: ${PAYMENT_CONFIRMATION_SUBJECT:Comprobante de pago confirmado}
 
 server:
   port: ${PORT:0}
@@ -101,3 +102,8 @@ management:
     health:
       probes:
         enabled: true
+
+notifications:
+  security:
+    payment-audience: ${NOTIFICATIONS_PAYMENT_AUDIENCE:ms-notifications}
+    payment-azp: ${NOTIFICATIONS_PAYMENT_AZP:treasury-service}

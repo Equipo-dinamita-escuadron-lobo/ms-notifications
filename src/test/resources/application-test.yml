@@ -1,0 +1,35 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:notifications;MODE=PostgreSQL;DB_CLOSE_DELAY=-1
+    username: sa
+    password: ""
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+  rabbitmq:
+    listener:
+      simple:
+        auto-startup: false
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost/test
+          jwk-set-uri: http://localhost/test/certs
+  mail:
+    host: localhost
+    port: 2525
+eureka:
+  client:
+    enabled: false
+jwt:
+  auth:
+    converter:
+      principle-attribute: preferred_username
+      resource-id: microservices_client
+notification-settings:
+  mail:
+    from: test@example.com
+    invoice-reminder-subject: Test reminder
+    payment-confirmation-subject: Test payment
