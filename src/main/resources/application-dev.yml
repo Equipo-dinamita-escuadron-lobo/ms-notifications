@@ -102,8 +102,3 @@ management:
     health:
       probes:
         enabled: true
-
-notifications:
-  security:
-    payment-audience: ${NOTIFICATIONS_PAYMENT_AUDIENCE:ms-notifications}
-    payment-azp: ${NOTIFICATIONS_PAYMENT_AZP:treasury-service}
