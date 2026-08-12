@@ -48,7 +48,7 @@ public class PaymentNotificationListener {
             for (var group : bySupplier.entrySet()) {
                 if (deliveries.existsByEventIdAndRecipientId(eventId, group.getKey())) continue;
                 var third = thirds.findByThirdId(group.getKey())
-                        .filter(t -> Boolean.TRUE.equals(t.getActive()) && t.getEmail() != null && !t.getEmail().isBlank())
+                        .filter(t -> Boolean.TRUE.equals(t.getIsActive()) && t.getEmail() != null && !t.getEmail().isBlank())
                         .orElseThrow(() -> new IllegalArgumentException("Proveedor sin correo activo: " + group.getKey()));
                 String rows = group.getValue().stream().map(d -> "<li>" + HtmlUtils.htmlEscape(d.invoiceReference()) +
                         ": " + d.amountPaid() + "</li>").collect(Collectors.joining());

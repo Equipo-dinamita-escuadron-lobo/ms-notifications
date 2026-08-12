@@ -36,7 +36,7 @@ public class ThirdReplicaEntity {
     private String email;
 
     @Column(name = "is_active")
-    private Boolean active;
+    private Boolean isActive;
 
     @TenantId
     String tenantId;

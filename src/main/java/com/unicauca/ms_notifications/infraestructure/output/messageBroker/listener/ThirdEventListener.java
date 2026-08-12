@@ -80,7 +80,7 @@ public class ThirdEventListener extends AbstractMessageListener<EventDtoThird<Th
                     replica.setEnterpriseId(thirdUpdatedDTO.getEntId());
                     replica.setFullName(thirdUpdatedDTO.getFullName());
                     replica.setEmail(thirdUpdatedDTO.getEmail());
-                    replica.setActive(thirdUpdatedDTO.getState());
+                    replica.setIsActive(thirdUpdatedDTO.getState());
 
                     thirdReplicaRepository.save(replica);
                     log.info("Third replica for thirdId: {} synchronized successfully.", thirdUpdatedDTO.getThirdId());
