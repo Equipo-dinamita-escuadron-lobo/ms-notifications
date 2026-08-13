@@ -37,6 +37,9 @@ public class EmailAdapter implements IEmailProviderPort {
     @Value("${notification-settings.mail.invoice-reminder-subject}")
     private String subject;
 
+    @Value("${notification-settings.mail.payment-confirmation-subject:Comprobante de pago confirmado}")
+    private String paymentConfirmationSubject;
+
     /**
      * @brief Sends an invoice reminder email.
      * @param recipientName the name of the recipient
@@ -45,7 +48,16 @@ public class EmailAdapter implements IEmailProviderPort {
      */
     @Override
     public void sendInvoiceReminderEmail(String recipientName, String recipientEmail, String htmlContent) {
-        log.info("Intentando enviar correo de recordatorio a: {}", recipientEmail);
+        send(recipientEmail, subject, htmlContent);
+    }
+
+    @Override
+    public void sendPaymentConfirmationEmail(String recipientName, String recipientEmail, String htmlContent) {
+        send(recipientEmail, paymentConfirmationSubject, htmlContent);
+    }
+
+    private void send(String recipientEmail, String mailSubject, String htmlContent) {
+        log.info("Intentando enviar correo a: {}", recipientEmail);
 
         MimeMessage mimeMessage = mailSender.createMimeMessage();
 
@@ -53,7 +65,7 @@ public class EmailAdapter implements IEmailProviderPort {
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
             helper.setFrom(fromEmail);
             helper.setTo(recipientEmail);
-            helper.setSubject(subject);
+            helper.setSubject(mailSubject);
             helper.setText(htmlContent, true); // true -> el contenido es HTML
 
             mailSender.send(mimeMessage);
@@ -61,6 +73,7 @@ public class EmailAdapter implements IEmailProviderPort {
 
         } catch (MessagingException e) {
             log.error("Error al enviar correo a {}: {}", recipientEmail, e.getMessage());
+            throw new IllegalStateException("No fue posible construir el correo", e);
         }
     }
     
