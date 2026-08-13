@@ -47,7 +47,7 @@ class PaymentNotificationListenerTest {
         supplier.setThirdId(77L);
         supplier.setFullName("Proveedor Uno");
         supplier.setEmail("proveedor@example.test");
-        supplier.setIsActive(true);
+        supplier.setActive(true);
         when(thirds.findByThirdId(77L)).thenReturn(Optional.of(supplier));
         when(deliveries.existsByEventIdAndRecipientId("event-1", 77L)).thenReturn(false, true);
         Message message = message();
